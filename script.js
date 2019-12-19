@@ -40,15 +40,19 @@ document.getElementById("arrears-btn").addEventListener("click", function() {
     
     
     const arrearsCalculator = () => {
-        arrears = loanPayable - ((curLoanBal) - (perWeek * numOfWeeks));
+        arrears = curLoanBal - ((loanPayable) - (perWeek * numOfWeeks));
 
-        if (arrears === 0) {
+        if (arrears === 0 || arrears < 0) {
             document.getElementById("svg-icon-1").src = "icons8-tick-1.svg"
         } else {
             document.getElementById("svg-icon-1").src = "icons8-tick-0.svg"
         }
 
-        return arrears
+        if (arrears < 0 || arrears === 0) {
+            return 0
+        } else {
+            return arrears
+        }
     
     }
     document.getElementById("arrears").innerHTML = arrearsCalculator();
