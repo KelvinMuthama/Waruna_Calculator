@@ -24,5 +24,19 @@ body {
     margin-top: 3em;
 }
 
+.insurance-img {
+    margin-bottom: 2em;
+    padding: 1em;
+}
+
+.insurance {
+    display: inline;
+    font-size: 3rem;
+}
+
+.check-insurance {
+    padding: 1em;
+}
+
 
 
