@@ -1,52 +1,35 @@
-// Add an event listener to the button
-document.getElementById("arrears-btn").addEventListener("click", function () {
-  // Get user's input date
-  let inputDate1, inputDate2;
-  inputDate1 = document.getElementById("start-date").value;
-  inputDate2 = document.getElementById("curr-date").value;
+// Get the target form
+const targetForm = document.forms[0];
 
-  // Set the two dates to variables
-  let date1, date2;
-  date1 = new Date(inputDate1);
-  date2 = new Date(inputDate2);
+// Get the form data
+const [loan, balance, weekly, startDate, today] = targetForm.elements;
 
-  // Function that calculates the number of weeks between the 2 dates.
-  const weeksCalculator = () => {
-    let timeDifference, timeToDays, daysToWeeks, remainingDays;
+// Function that calculates the number of weeks between the 2 dates.
+const weeksCalculator = () => {
+  let timeDifference, timeToDays, daysToWeeks;
 
-    timeDifference = date2.getTime() - date1.getTime();
-    timeToDays = timeDifference / (1000 * 3600 * 24);
-    daysToWeeks = Math.floor(timeToDays / 7);
-    remainingDays = timeToDays % 7;
+  timeDifference =
+    new Date(today.value).getTime() - new Date(startDate.value).getTime();
+  timeToDays = timeDifference / (1000 * 3600 * 24);
+  daysToWeeks = Math.floor(timeToDays / 7);
 
-    return daysToWeeks;
-  };
+  return daysToWeeks;
+};
+
+// Calculate the arrears
+const arrearsCalculator = () => {
+  arrears = balance.value - (loan.value - weekly.value * weeksCalculator());
+  return arrears < 0 ? 0 : arrears;
+};
+
+// Listen for the button click
+document.getElementById("arrears-btn").addEventListener("click", () => {
+  const arrears = arrearsCalculator();
 
   document.getElementById("num-of-weeks").innerHTML = weeksCalculator();
-
-  // Function that calculates the arrears
-
-  let curLoanBal, perWeek, loanPayable, arrears, numOfWeeks;
-  loanPayable = document.getElementById("loan-payable").value;
-  perWeek = document.getElementById("per-week").value;
-  curLoanBal = document.getElementById("current-loan-bal").value;
-
-  numOfWeeks = weeksCalculator();
-
-  const arrearsCalculator = () => {
-    arrears = curLoanBal - (loanPayable - perWeek * numOfWeeks);
-
-    if (arrears === 0 || arrears < 0) {
-      document.getElementById("svg-icon-1").src = "icons8-tick-1.svg";
-    } else {
-      document.getElementById("svg-icon-1").src = "icons8-tick-0.svg";
-    }
-
-    if (arrears < 0 || arrears === 0) {
-      return 0;
-    } else {
-      return arrears;
-    }
-  };
   document.getElementById("arrears").innerHTML = arrearsCalculator();
+
+  arrears === 0 || arrears < 0
+    ? (document.getElementById("svg-icon-1").src = "icons8-tick-1.svg")
+    : (document.getElementById("svg-icon-1").src = "icons8-tick-0.svg");
 });
