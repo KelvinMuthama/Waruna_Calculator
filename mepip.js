@@ -1,17 +1,15 @@
-document.getElementById("insurance-btn").addEventListener("click", function() {
+document.getElementById("insurance-btn").addEventListener("click", function () {
+  // Calculate Insurance
 
-    // Calculate Insurance
+  let loanGranted, numberOfMonths, insurance;
+  loanGranted = document.getElementById("loan-granted").value;
+  numberOfMonths = document.getElementById("months").value;
 
-    let loanGranted, numberOfMonths, insurance;
-    loanGranted = document.getElementById("loan-granted").value;
-    numberOfMonths = document.getElementById("months").value;
+  const calculateInsurance = () => {
+    insurance = ((5.03 * numberOfMonths + 3.03) * loanGranted) / 6000;
 
-    const calculateInsurance = () => {
-        insurance = ((5.03 * numberOfMonths + 3.03) * loanGranted) / 6000
+    return Math.round(insurance * 100) / 100;
+  };
 
-        return Math.round(insurance * 100) / 100
-    }
-
-    document.getElementById("insurance").innerHTML = calculateInsurance();
-    
-})
+  document.getElementById("insurance").innerHTML = calculateInsurance();
+});
