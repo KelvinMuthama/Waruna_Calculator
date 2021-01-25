@@ -29,7 +29,7 @@ document.getElementById("arrears-btn").addEventListener("click", () => {
   document.getElementById("num-of-weeks").innerHTML = weeksCalculator();
   document.getElementById("arrears").innerHTML = arrearsCalculator();
 
-  arrears === 0 || arrears < 0
+  arrears <= 0
     ? (document.getElementById("svg-icon-1").src = "icons8-tick-1.svg")
     : (document.getElementById("svg-icon-1").src = "icons8-tick-0.svg");
 });
